@@ -11,7 +11,7 @@ const Routes = () => {
     <NavigationContainer>
       <Stack.Navigator headerMode="none" screenOptions={{
         cardStyle:{
-          backgroundColor: '#f0f0f5'
+          backgroundColor: '#fff'
         }
       }}>
         <Stack.Screen name="Home" component={Home}/>
