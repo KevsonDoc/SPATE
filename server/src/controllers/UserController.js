@@ -78,7 +78,25 @@ class UserController {
     return response.json({ user });
   }
   async delete(request, response) {
-    const { cd_user } = request.params;
+    const authHeader = request.headers.authorization;
+
+    if (!authHeader) {
+      return response.status(401).json({
+        message: 'Token is require',
+      })
+    }
+
+    const [, token] = authHeader.split(' ');
+
+    try {
+      const decoded = jwt.verify(token, config.APP_SECRET);
+
+      var cd_user = decoded.id;
+    } catch (err) {
+      return response.status(401).json({
+        message: 'Token invalid',
+      })
+    }
 
     try {
       await knex('tb_user')
