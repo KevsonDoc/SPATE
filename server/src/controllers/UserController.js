@@ -41,6 +41,23 @@ class UserController {
 
     return response.json({ user });
   }
+  async delete(request, response) {
+    const { cd_user } = request.params;
+
+    try {
+      await knex('tb_user')
+        .where('cd_user', cd_user)
+        .delete();
+
+      return response.sendStatus(200).send({
+        success: `Successfully deleting the user with id ${ cd_user }`,
+      });
+    } catch (err) {
+      console.log(err);
+
+      return response.status(400).send({ error: 'error when deleting the record' });
+    }
+  }
 }
 
 module.exports = UserController;
