@@ -17,7 +17,6 @@ class Auth {
       const decoded = jwt.verify(token, config.APP_SECRET);
 
       next();
-      return decoded.id;
     } catch (err) {
       return response.status(401).json({
         message: 'Token invalid',

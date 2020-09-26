@@ -4,8 +4,6 @@ const md5 = require('md5');
 const knex = require('../models/connection');
 const config = require('../config/config');
 
-const Auth = require('../middlewares/auth');
-
 class UserController {
   async login(request, response){
     const { email, password } = request.body;
