@@ -22,6 +22,23 @@ class CasesController {
       response.status(400).send({ error: 'Failed to register' });
     }
   }
+  async delete(request, response) {
+    const { cd_cases } = request.params;
+
+    try {
+      await knex('tb_cases')
+        .where('cd_cases', cd_cases)
+        .delete();
+
+      return response.sendStatus(200).send({
+        success: `Successfully deleting the case with id ${ cd_cases }`,
+      });
+    } catch (err) {
+      console.log(err);
+
+      return response.status(400).send({ error: 'error when deleting the record' });
+    }
+  }
 }
 
 module.exports = CasesController;

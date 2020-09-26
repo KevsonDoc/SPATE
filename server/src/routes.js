@@ -18,5 +18,6 @@ routes.delete('/user', auth.auth, userController.delete);
 routes.put('/user', auth.auth, userController.update);
 
 routes.post('/cases', auth.auth, casesController.create);
+routes.delete('/cases/:cd_cases', auth.auth, casesController.delete);
 
 module.exports = routes;
