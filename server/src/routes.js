@@ -2,8 +2,10 @@ const { Router } = require('express');
 
 const routes = Router();
 
-routes.get('/', (request, response) => {
-  response.status(200).json({ success: 'success' });
-});
+const UserController = require('./controllers/UserController');
+
+const userController = new UserController();
+
+routes.post('/user', userController.create);
 
 module.exports = routes;
