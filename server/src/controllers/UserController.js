@@ -58,6 +58,27 @@ class UserController {
       return response.status(400).send({ error: 'error when deleting the record' });
     }
   }
+  async update(request, response) {
+    const { cd_user } = request.params;
+
+    const { name, email, password, cpf } = request.body;
+
+    try {
+      await knex('tb_user')
+        .update({
+          name,
+          email,
+          password,
+          cpf
+        })
+        .where({ cd_user });
+
+      return response.status(200).send({ success: 'Updated successfully' });
+    } catch (err) {
+      console.log(err);
+      response.status(400).send({ error: 'Failed to update'});
+    }
+  }
 }
 
 module.exports = UserController;
