@@ -13,6 +13,6 @@ routes.post('/login', userController.login);
 routes.post('/user', userController.create);
 routes.get('/user/:cd_user', userController.show);
 routes.delete('/user/:cd_user', auth.auth, userController.delete);
-routes.put('/user/:cd_user', auth.auth, userController.update);
+routes.put('/user', auth.auth, userController.update);
 
 module.exports = routes;

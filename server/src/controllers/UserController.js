@@ -4,6 +4,8 @@ const md5 = require('md5');
 const knex = require('../models/connection');
 const config = require('../config/config');
 
+const Auth = require('../middlewares/auth');
+
 class UserController {
   async login(request, response){
     const { email, password } = request.body;
@@ -93,9 +95,27 @@ class UserController {
     }
   }
   async update(request, response) {
-    const { cd_user } = request.params;
+    const { name, cpf, password, email } = request.body;
 
-    const { name, email, password, cpf } = request.body;
+    const authHeader = request.headers.authorization;
+
+    if (!authHeader) {
+      return response.status(401).json({
+        message: 'Token is require',
+      })
+    }
+
+    const [, token] = authHeader.split(' ');
+
+    try {
+      const decoded = jwt.verify(token, config.APP_SECRET);
+
+      var cd_user = decoded.id;
+    } catch (err) {
+      return response.status(401).json({
+        message: 'Token invalid',
+      })
+    }
 
     try {
       await knex('tb_user')
