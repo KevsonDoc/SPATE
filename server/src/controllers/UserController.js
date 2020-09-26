@@ -1,9 +1,43 @@
+const jwt = require('jsonwebtoken');
 const md5 = require('md5');
 
 const knex = require('../models/connection');
 const config = require('../config/config');
 
 class UserController {
+  async login(request, response){
+    const { email, password } = request.body;
+
+    const student = await knex('tb_user').
+      where('email', email).
+      first().
+      select();
+
+    if (student) {
+      if (password === student.password) {
+        const token = jwt.sign({ id: student.cd_user }, config.APP_SECRET, {
+          expiresIn: '1d'
+        });
+        const data = {
+          name: student.name,
+          email: student.email,
+          cpf: student.cpf, 
+          id: student.cd_user,
+          token
+        };
+        return response.status(200).json(data);
+      } else {
+        return response.status(404).json({
+          message: 'User not found',
+        });
+      }
+    } else {
+      return response.status(404).json({
+        message: 'User not found',
+      });
+    }
+  }
+
   async create(request, response) {
     const { name, email, password, cpf } = request.body;
 
