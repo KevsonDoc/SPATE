@@ -24,6 +24,16 @@ function descrypt(password) {
   return decipher.final();
 };
 
+function getIdFromToken (authHeader) {
+  try {
+    const [, token] = authHeader.split(' ');
+    const decoded = jwt.verify(token, config.APP_SECRET);
+
+    return decoded.id;
+  } catch (err) {
+    return false;
+  }
+}
 class UserController {
   async login(request, response){
     const { email, password } = request.body;
@@ -119,13 +129,9 @@ class UserController {
       })
     }
 
-    const [, token] = authHeader.split(' ');
-
-    try {
-      const decoded = jwt.verify(token, config.APP_SECRET);
-
-      var cd_user = decoded.id;
-    } catch (err) {
+    const cd_user = getIdFromToken(authHeader);
+    
+    if (cd_user === false) {
       return response.status(401).json({
         message: 'Token invalid',
       })
@@ -156,13 +162,9 @@ class UserController {
       })
     }
 
-    const [, token] = authHeader.split(' ');
-
-    try {
-      const decoded = jwt.verify(token, config.APP_SECRET);
-
-      var cd_user = decoded.id;
-    } catch (err) {
+    const cd_user = getIdFromToken(authHeader);
+    
+    if (cd_user === false) {
       return response.status(401).json({
         message: 'Token invalid',
       })
