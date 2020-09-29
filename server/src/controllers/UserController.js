@@ -4,6 +4,8 @@ const crypto = require('crypto');
 const knex = require('../models/connection');
 const config = require('../config/config');
 
+const checkField = require('../utils/index');
+
 const cryptData = {
   algorithm : 'aes256',
   secret : config.md5HashKey,
@@ -61,6 +63,13 @@ class UserController {
   async create(request, response) {
     const { name, email, password, cpf } = request.body;
 
+    const userEmailExisting = await checkField('tb_user', 'email', email);
+    const userCpfExisting = await checkField('tb_user', 'cpf', cpf);
+
+    if (userEmailExisting === true || userCpfExisting === true) {
+      return response.status(409).send({ error: 'Conflict between fields !' });
+    }
+
     const encryptedPassword = encrypt(password);
 
     const user = {
@@ -87,6 +96,12 @@ class UserController {
   }
   async show(request, response) {
     const { cd_user } = request.params;
+
+    const userVerification = await checkField('tb_user', 'cd_user', cd_user);
+
+    if (userVerification === false) {
+      return response.status(404).send({ error: 'User not found' });
+    }
 
     const user = await knex('tb_user').
       where('cd_user', cd_user).
