@@ -1,8 +1,26 @@
 const jwt = require('jsonwebtoken');
-const md5 = require('md5');
+const crypto = require('crypto');
 
 const knex = require('../models/connection');
 const config = require('../config/config');
+
+const cryptData = {
+  algorithm : 'aes256',
+  secret : config.md5HashKey,
+  type: 'hex'
+};
+
+function encrypt(password) {
+  const cipher = crypto.createCipher(cryptData.algorithm, cryptData.secret);
+  cipher.update(password);
+  return cipher.final(cryptData.type);
+};
+
+function descrypt(password) {
+  const decipher = crypto.createDecipher(cryptData.algorithm, cryptData.secret);
+  decipher.update(password, cryptData.type);
+  return decipher.final();
+};
 
 class UserController {
   async login(request, response){
@@ -13,8 +31,10 @@ class UserController {
       first().
       select();
 
+    const decryptedPassword = descrypt(student.password);
+
     if (student) {
-      if (password === student.password) {
+      if (password === decryptedPassword.toString()) {
         const token = jwt.sign({ id: student.cd_user }, config.APP_SECRET, {
           expiresIn: '1d'
         });
@@ -41,7 +61,7 @@ class UserController {
   async create(request, response) {
     const { name, email, password, cpf } = request.body;
 
-    const encryptedPassword = md5(password + config.md5HashKey);
+    const encryptedPassword = encrypt(password);
 
     const user = {
       name,
