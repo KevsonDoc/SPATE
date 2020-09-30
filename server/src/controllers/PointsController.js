@@ -1,0 +1,65 @@
+const jwt = require('jsonwebtoken');
+
+const knex = require('../models/connection');
+const config = require('../config/config');
+
+const checkField = require('../utils/index');
+
+function getIdFromToken (authHeader) {
+  try {
+    const [, token] = authHeader.split(' ');
+    const decoded = jwt.verify(token, config.APP_SECRET);
+
+    return decoded.id;
+  } catch (err) {
+    return false;
+  }
+}
+class PointsController {
+  async create(request, response) {
+    const { title, description, longitude, latitude, id_cases } = request.body;
+    const authHeader = request.headers.authorization;
+
+    const titleExisting = await checkField('tb_points', 'title', title);
+    const descriptionExisting = await checkField('tb_points', 'description', description);
+
+    if (titleExisting === true || descriptionExisting === true) {
+      return response.status(409).send({ error: 'Conflict between fields !' });
+    }
+
+    if (!authHeader) {
+      return response.status(401).json({
+        message: 'Token is require',
+      })
+    }
+
+    const id_user = getIdFromToken(authHeader);
+
+    const point = {
+      title,
+      description,
+      longitude,
+      latitude, 
+      id_cases,
+      id_user
+    };
+
+    const trx = await knex.transaction();
+
+    try {
+      await trx('tb_points').insert(point);
+      await trx.commit();
+
+      return response.status(201).json({
+        succes: 'Registered successfully',
+        data: point,
+      });
+    } catch (err) {
+      console.log(err);
+      response.status(400).send({ error: 'Failed to register point' });
+    }
+  }
+  
+}
+
+module.exports = PointsController;
