@@ -59,7 +59,88 @@ class PointsController {
       response.status(400).send({ error: 'Failed to register point' });
     }
   }
-  
+  async show(request, response) {
+    const { cd_point } = request.params;
+
+    const pointVerification = await checkField('tb_points', 'cd_point', cd_point);
+
+    if (pointVerification === false) {
+      return response.status(404).send({ error: 'Point not found' });
+    }
+
+    const point = await knex('tb_points').
+      where('cd_point', cd_point).
+      first().
+      select('title', 'description', 'id_cases', 'latitude', 'longitude');
+
+    return response.json({ point });
+  }
+  async delete(request, response) {
+    const authHeader = request.headers.authorization;
+
+    if (!authHeader) {
+      return response.status(401).json({
+        message: 'Token is require',
+      })
+    }
+
+    const cd_user = getIdFromToken(authHeader);
+    
+    if (cd_user === false) {
+      return response.status(401).json({
+        message: 'Token invalid',
+      })
+    }
+
+    try {
+      await knex('tb_user')
+        .where('cd_user', cd_user)
+        .delete();
+
+      return response.sendStatus(200).send({
+        success: `Successfully deleting the user with id ${ cd_user }`,
+      });
+    } catch (err) {
+      console.log(err);
+
+      return response.status(400).send({ error: 'error when deleting the record' });
+    }
+  }
+  async update(request, response) {
+    const { name, cpf, password, email } = request.body;
+
+    const authHeader = request.headers.authorization;
+
+    if (!authHeader) {
+      return response.status(401).json({
+        message: 'Token is require',
+      })
+    }
+
+    const cd_user = getIdFromToken(authHeader);
+    
+    if (cd_user === false) {
+      return response.status(401).json({
+        message: 'Token invalid',
+      })
+    }
+
+    try {
+      await knex('tb_user')
+        .update({
+          name,
+          email,
+          password,
+          cpf
+        })
+        .where({ cd_user });
+
+      return response.status(200).send({ success: 'Updated successfully' });
+    } catch (err) {
+      console.log(err);
+      response.status(400).send({ error: 'Failed to update'});
+    }
+  }
 }
 
 module.exports = PointsController;
