@@ -84,61 +84,20 @@ class PointsController {
       })
     }
 
-    const cd_user = getIdFromToken(authHeader);
-    
-    if (cd_user === false) {
-      return response.status(401).json({
-        message: 'Token invalid',
-      })
-    }
+    const cd_point = request.params;
 
     try {
-      await knex('tb_user')
-        .where('cd_user', cd_user)
+      await knex('tb_points')
+        .where('cd_point', cd_point)
         .delete();
 
       return response.sendStatus(200).send({
-        success: `Successfully deleting the user with id ${ cd_user }`,
+        success: `Successfully deleting the point with id ${ cd_point }`,
       });
     } catch (err) {
       console.log(err);
 
       return response.status(400).send({ error: 'error when deleting the record' });
-    }
-  }
-  async update(request, response) {
-    const { name, cpf, password, email } = request.body;
-
-    const authHeader = request.headers.authorization;
-
-    if (!authHeader) {
-      return response.status(401).json({
-        message: 'Token is require',
-      })
-    }
-
-    const cd_user = getIdFromToken(authHeader);
-    
-    if (cd_user === false) {
-      return response.status(401).json({
-        message: 'Token invalid',
-      })
-    }
-
-    try {
-      await knex('tb_user')
-        .update({
-          name,
-          email,
-          password,
-          cpf
-        })
-        .where({ cd_user });
-
-      return response.status(200).send({ success: 'Updated successfully' });
-    } catch (err) {
-      console.log(err);
-      response.status(400).send({ error: 'Failed to update'});
     }
   }
 }

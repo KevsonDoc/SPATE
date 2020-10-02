@@ -26,5 +26,6 @@ routes.delete('/cases/:cd_cases', auth.auth, casesController.delete);
 
 routes.post('/point', auth.auth, pointsController.create);
 routes.get('/point/:cd_point', pointsController.show);
+routes.delete('/point/:cd_point', auth.auth, pointsController.delete);
 
 module.exports = routes;
