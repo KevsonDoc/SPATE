@@ -23,6 +23,8 @@ routes.put('/user', auth.auth, userController.update);
 
 routes.post('/cases', auth.auth, casesController.create);
 routes.delete('/cases/:cd_cases', auth.auth, casesController.delete);
+routes.get('/cases', casesController.index);
+
 
 routes.post('/point', auth.auth, pointsController.create);
 routes.get('/point/:cd_point', pointsController.show);

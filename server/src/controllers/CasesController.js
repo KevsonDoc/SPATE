@@ -1,7 +1,6 @@
 const jwt = require('jsonwebtoken');
 
 const knex = require('../models/connection');
-const config = require('../config/config');
 
 const checkField = require('../utils/index');
 
@@ -52,6 +51,19 @@ class CasesController {
       console.log(err);
 
       return response.status(400).send({ error: 'error when deleting the record' });
+    }
+  }
+  async index(request, response) {
+    try {
+      const cases = await knex.select('*').table('tb_cases');
+
+      return response.status(200).json({
+        data: cases
+      });
+    } catch (err) {
+      console.log(err);
+
+      return response.status(400).send({ error: 'error when search the record' });
     }
   }
 }
