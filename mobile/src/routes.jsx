@@ -6,6 +6,8 @@ const Stack = createStackNavigator();
 
 import Home from './pages/Home/index';
 import Initial from './pages/Initial/index';
+import Login from './pages/Login/index';
+import Register from './pages/Register/index';
 
 const Routes = () => {
   return(
@@ -15,7 +17,9 @@ const Routes = () => {
           backgroundColor: '#fff'
         }
       }}>
-        <Stack.Screen name="Initial" component={Initial}/>
+        <Stack.Screen name="Initial" component={Initial}/>        
+        <Stack.Screen name="Login" component={Login}/>
+        <Stack.Screen name="Register" component={Register}/>
         <Stack.Screen name="Home" component={Home}/>
       </Stack.Navigator>
     </NavigationContainer>

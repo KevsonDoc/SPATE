@@ -7,8 +7,10 @@ import {
   StatusBar,
   Dimensions 
 } from 'react-native';
+
 import { LinearGradient } from 'expo-linear-gradient';
 
+import { Fumi } from 'react-native-textinput-effects';
 import { RectButton } from 'react-native-gesture-handler';
 import { Feather } from '@expo/vector-icons';
 
@@ -18,17 +20,14 @@ const { height } = Dimensions.get('window');
 
 import styles from './styles';
 
-const Home = () => {
+const Register = () => {
   const navigation = useNavigation();
   
   function handleNavigationToHome(){
     navigation.navigate('Home');
   }
-  function handleNavigationToLogin(){
-    navigation.navigate('Login');
-  }
   return (
-    <KeyboardAvoidingView
+    <View
       style={{ flex: 1, backgroundColor: '#09459e', padding: 20, height: height }}
       behavior={ Platform.OS === 'ios' ? 'padding' : undefined }
     >
@@ -58,21 +57,51 @@ const Home = () => {
         </View>
       </View>
       <View style={styles.footer}>
-        <RectButton style={styles.button} onPress={handleNavigationToLogin}>
-          <View style={styles.buttonIcon}>
-            <Feather name="arrow-right" color="#fff" size={24} />
-          </View>
-          <Text style={styles.buttonText}>Logar</Text>
-        </RectButton>
+        <Fumi style={styles.input}
+          label={'Nome'}
+          iconClass={Feather}
+          iconName={'user'}
+          iconColor={'#11ad99'}
+          iconSize={24}
+          iconWidth={44}
+          inputPadding={16}
+        />
+        <Fumi style={styles.input}
+          label={'Email'}
+          iconClass={Feather}
+          iconName={'mail'}
+          iconColor={'#11ad99'}
+          iconSize={24}
+          iconWidth={44}
+          inputPadding={16}
+        />
+        <Fumi style={styles.input}
+          label={'CPF'}
+          iconClass={Feather}
+          iconName={'credit-card'}
+          iconColor={'#11ad99'}
+          iconSize={24}
+          iconWidth={44}
+          inputPadding={16}
+        />
+        <Fumi style={styles.input}
+          label={'Senha'}
+          iconClass={Feather}
+          iconName={'lock'}
+          iconColor={'#11ad99'}
+          iconSize={24}
+          iconWidth={44}
+          inputPadding={16}
+        />
         <RectButton style={styles.button}>
           <View style={styles.buttonIcon}>
-            <Feather name="arrow-right" color="#fff" size={24} />
+            <Feather name="log-in" color="#fff" size={24} />
           </View>
-          <Text style={styles.buttonText} onPress={handleNavigationToHome}>Entrar sem fazer o Login</Text>
+          <Text style={styles.buttonText} onPress={handleNavigationToHome}>Se cadastrar</Text>
         </RectButton>
       </View>
-    </KeyboardAvoidingView>
+    </View>
   );
 };
 
-export default Home;
+export default Register;
