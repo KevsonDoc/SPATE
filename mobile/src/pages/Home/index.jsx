@@ -2,7 +2,7 @@ import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 
-const Home = () => {
+const Initial = () => {
   return (
     <View style={styles.mapContainer}>
       <MapView 
@@ -42,4 +42,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Home;
+export default Initial;
