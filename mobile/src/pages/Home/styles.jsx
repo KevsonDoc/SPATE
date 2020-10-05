@@ -39,6 +39,34 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
   },
+  mapMarker: {
+    width: 90,
+    height: 80,
+  },
+
+  mapMarkerContainer: {
+    width: 90,
+    height: 80,
+    backgroundColor: '#09459e',
+    flexDirection: 'column',
+    borderRadius: 100,
+    overflow: 'hidden',
+    alignItems: 'center',
+  },
+
+  mapMarkerImage: {
+    width: 90,
+    height: 45,
+    resizeMode: 'cover',
+  },
+
+  mapMarkerTitle: {
+    flex: 1,
+    fontFamily: 'Roboto_400Regular',
+    color: '#FFF',
+    fontSize: 13,
+    lineHeight: 23,
+  },
 });
 
 export default styles;
