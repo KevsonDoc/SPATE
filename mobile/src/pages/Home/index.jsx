@@ -25,6 +25,10 @@ const Points = () => {
     navigation.navigate('Detail');
   }
 
+  function hadleNavigateToCreatePoint() {
+    navigation.navigate('CreatePoint');
+  }
+
   function handleNavigateBack() {
     navigation.goBack();
   }
@@ -47,7 +51,7 @@ const Points = () => {
               <Feather name="arrow-left" color="#11ad99" size={24} onPress={handleNavigateBack}/>
             </TouchableOpacity>
             <TouchableOpacity>
-              <Feather name="plus" color="#11ad99" size={24} onPress={handleNavigateBack}/>
+              <Feather name="plus" color="#11ad99" size={24} onPress={hadleNavigateToCreatePoint}/>
             </TouchableOpacity>
           </View>
           <Text style={styles.title}>SPATE - A SUA SEGURANÇA</Text>
