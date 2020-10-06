@@ -21,14 +21,14 @@ const { height } = Dimensions.get('window');
 
 import styles from './styles';
 
-const Register = () => {
+const CreatePoint = () => {
   const navigation = useNavigation();
   
   function handleNavigateBack() {
     navigation.goBack();
   }
-  function handleNavigationToFinishRegister(){
-    navigation.navigate('Register');
+  function handleNavigationToFinishRegisterPoint(){
+    navigation.navigate('FinishRegisterPoint');
   }
   return (
     <View
@@ -86,11 +86,11 @@ const Register = () => {
           <View style={styles.buttonIcon}>
             <Feather name="arrow-right" color="#fff" size={24} />
           </View>
-          <Text style={styles.buttonText} onPress={handleNavigationToFinishRegister}>Próximo</Text>
+          <Text style={styles.buttonText} onPress={handleNavigationToFinishRegisterPoint}>Próximo</Text>
         </RectButton>
       </View>
     </View>
   );
 };
 
-export default Register;
+export default CreatePoint;

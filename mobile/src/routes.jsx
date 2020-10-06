@@ -10,6 +10,7 @@ import Login from './pages/Login/index';
 import Register from './pages/Register/index';
 import Detail from './pages/Detail/index';
 import CreatePoint from './pages/CreatePoint/index';
+import FinishRegisterPoint from './pages/FinishRegisterPoint/index';
 
 const Routes = () => {
   return(
@@ -25,6 +26,7 @@ const Routes = () => {
         <Stack.Screen name="Home" component={Home}/>
         <Stack.Screen name="Detail" component={Detail}/>
         <Stack.Screen name="CreatePoint" component={CreatePoint}/>
+        <Stack.Screen name="FinishRegisterPoint" component={FinishRegisterPoint}/>
       </Stack.Navigator>
     </NavigationContainer>
   );
