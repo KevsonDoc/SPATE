@@ -21,6 +21,10 @@ import styles from './styles';
 const Points = () => {
   const navigation = useNavigation();
 
+  function handleNavigateToDetail() {
+    navigation.navigate('Detail');
+  }
+
   function handleNavigateBack() {
     navigation.goBack();
   }
@@ -58,6 +62,7 @@ const Points = () => {
             }}
           >
             <Marker
+              onPress={handleNavigateToDetail}
               style={styles.mapMarker}
               coordinate={{
                 latitude: -24.2858571, 

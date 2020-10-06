@@ -8,6 +8,7 @@ import Home from './pages/Home/index';
 import Initial from './pages/Initial/index';
 import Login from './pages/Login/index';
 import Register from './pages/Register/index';
+import Detail from './pages/Detail/index';
 
 const Routes = () => {
   return(
@@ -21,6 +22,7 @@ const Routes = () => {
         <Stack.Screen name="Login" component={Login}/>
         <Stack.Screen name="Register" component={Register}/>
         <Stack.Screen name="Home" component={Home}/>
+        <Stack.Screen name="Detail" component={Detail}/>
       </Stack.Navigator>
     </NavigationContainer>
   );
