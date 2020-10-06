@@ -42,9 +42,14 @@ const Points = () => {
           }}
         />
         <View style={styles.header}>
-          <TouchableOpacity>
-            <Feather name="arrow-left" color="#11ad99" size={24} onPress={handleNavigateBack}/>
-          </TouchableOpacity>
+          <View style={styles.icons}>
+            <TouchableOpacity>
+              <Feather name="arrow-left" color="#11ad99" size={24} onPress={handleNavigateBack}/>
+            </TouchableOpacity>
+            <TouchableOpacity>
+              <Feather name="plus" color="#11ad99" size={24} onPress={handleNavigateBack}/>
+            </TouchableOpacity>
+          </View>
           <Text style={styles.title}>SPATE - A SUA SEGURANÇA</Text>
           <Text style={styles.description}>
             <Emoji name="rotating_light" style={styles.emoji} />

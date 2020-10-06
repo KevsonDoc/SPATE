@@ -12,6 +12,10 @@ const styles = StyleSheet.create({
   header: {
     paddingHorizontal: 32,
   },
+  icons: {
+    justifyContent: 'space-between',
+    flexDirection: 'row',
+  },
   title: {
     fontSize: 20,
     color: 'white',
