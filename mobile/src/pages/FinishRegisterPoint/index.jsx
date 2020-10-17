@@ -16,12 +16,16 @@ import { Feather } from '@expo/vector-icons';
 import Emoji from 'react-native-emoji';
 import styles from './styles';
 
-
 const Points = () => {
   const navigation = useNavigation();
 
   function handleNavigateBack() {
     navigation.goBack();
+  }
+  
+  function handleSelectMapPosition(e) {
+    const position = e.nativeEvent.coordinate;
+    console.log(position);
   }
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -57,6 +61,7 @@ const Points = () => {
               latitudeDelta: 0.05,
               longitudeDelta: 0.05,
             }}
+            onPress={handleSelectMapPosition}
           >
           </MapView>
         </View>

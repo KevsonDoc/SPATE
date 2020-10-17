@@ -1,5 +1,3 @@
-const jwt = require('jsonwebtoken');
-
 const knex = require('../models/connection');
 
 const checkField = require('../utils/index');
