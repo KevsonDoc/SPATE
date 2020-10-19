@@ -59,6 +59,18 @@ class PointsController {
       response.status(400).send({ error: 'Failed to register point' });
     }
   }
+  async index(request, response) {
+    try {
+      const points = await knex('tb_points').select('*');
+      
+      return response.json({
+        points
+      });
+    } catch (err) {
+      console.log(err);
+      response.status(400).send({ error: 'Failed to indexed points' });
+    }
+  }
   async show(request, response) {
     const { cd_point } = request.params;
 
