@@ -42,7 +42,6 @@ const Points = () => {
     }).catch(error => console.log(error));
   }, []);
   
-  const pointConvert = Object.values(points);
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <View style={styles.container}>
@@ -81,41 +80,18 @@ const Points = () => {
               longitudeDelta: 0.05,
             }}
           >
-            {console.log(pointConvert)}
-            {pointConvert.map((point) => {
-              point.map((newPoint) => {
-                [console.log(newPoint.latitude)]
-                [console.log(newPoint.longitude)]
+            {
+              points.map((data_point, index) => {
                 return (
                   <Marker
-                    onPress={handleNavigateToDetail}
-                    style={styles.mapMarker}
-                    coordinate={{
-                      latitude: newPoint.latitude, 
-                      longitude: newPoint.longitude,
-                    }}
-                  >
-                    <View style={styles.mapMarkerContainer}>
-                      <Image
-                        style={styles.mapMarkerImage}
-                        source={{
-                          uri: 'https://www.consumoempauta.com.br/site2020/wp-content/uploads/2018/03/enchente.png'
-                        }}
-                      />
-                      <Text style={styles.mapMarkerTitle}>{newPoint.title}</Text>
-                    </View>
-                  </Marker>
-                )
-              })  
-              return;
-            })}
-{/* 
-                <Marker
+                  key={index}
                   onPress={handleNavigateToDetail}
                   style={styles.mapMarker}
                   coordinate={{
-                    latitude: -24.2858571, 
-                    longitude: -46.9707956,
+                    latitude: data_point.latitude, 
+                    longitude: data_point.longitude,
+                    latitudeDelta: 0.008,
+                    longitudeDelta: 0.008,
                   }}
                 >
                   <View style={styles.mapMarkerContainer}>
@@ -127,7 +103,10 @@ const Points = () => {
                     />
                     <Text style={styles.mapMarkerTitle}>title</Text>
                   </View>
-                </Marker>  */}
+                </Marker>
+                )
+              })
+            }
           </MapView>
         </View>
       </View>
