@@ -15,8 +15,9 @@ import { LinearGradient } from 'expo-linear-gradient';
 
 import { Feather } from '@expo/vector-icons';
 import Emoji from 'react-native-emoji';
-import styles from './styles';
 
+import styles from './styles';
+import api from '../../services/api';
 
 const Points = () => {
   const navigation = useNavigation();
@@ -32,6 +33,16 @@ const Points = () => {
   function handleNavigateBack() {
     navigation.goBack();
   }
+  const [points, setPoints] = useState([]);
+
+  useEffect(() => {
+    api.get('/point').then((response) => {
+      // console.log(response.data);
+      setPoints(response.data);
+    }).catch(error => console.log(error));
+  }, []);
+  
+  const pointConvert = Object.values(points);
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <View style={styles.container}>
@@ -70,41 +81,53 @@ const Points = () => {
               longitudeDelta: 0.05,
             }}
           >
-            <Marker
-              onPress={handleNavigateToDetail}
-              style={styles.mapMarker}
-              coordinate={{
-                latitude: -24.2858571, 
-                longitude: -46.9707956,
-              }}
-            >
-              <View style={styles.mapMarkerContainer}>
-                <Image
-                  style={styles.mapMarkerImage}
-                  source={{
-                    uri: 'https://www.consumoempauta.com.br/site2020/wp-content/uploads/2018/03/enchente.png'
+            {console.log(pointConvert)}
+            {pointConvert.map((point) => {
+              point.map((newPoint) => {
+                [console.log(newPoint.latitude)]
+                [console.log(newPoint.longitude)]
+                return (
+                  <Marker
+                    onPress={handleNavigateToDetail}
+                    style={styles.mapMarker}
+                    coordinate={{
+                      latitude: newPoint.latitude, 
+                      longitude: newPoint.longitude,
+                    }}
+                  >
+                    <View style={styles.mapMarkerContainer}>
+                      <Image
+                        style={styles.mapMarkerImage}
+                        source={{
+                          uri: 'https://www.consumoempauta.com.br/site2020/wp-content/uploads/2018/03/enchente.png'
+                        }}
+                      />
+                      <Text style={styles.mapMarkerTitle}>{newPoint.title}</Text>
+                    </View>
+                  </Marker>
+                )
+              })  
+              return;
+            })}
+{/* 
+                <Marker
+                  onPress={handleNavigateToDetail}
+                  style={styles.mapMarker}
+                  coordinate={{
+                    latitude: -24.2858571, 
+                    longitude: -46.9707956,
                   }}
-                />
-                <Text style={styles.mapMarkerTitle}>Enchente</Text>
-              </View>
-            </Marker>
-            <Marker
-              style={styles.mapMarker}
-              coordinate={{
-                latitude: -24.302764,  
-                longitude: -47.013051,
-              }}
-            >
-              <View style={styles.mapMarkerContainer}>
-                <Image
-                  style={styles.mapMarkerImage}
-                  source={{
-                    uri: 'https://www.girodoboi.com.br/wp-content/uploads/2020/05/virada-do-tempo-chuva-frio-geada-centro-oeste-sudeste-sul-final-de-maio-2020.jpg'
-                  }}
-                />
-                <Text style={styles.mapMarkerTitle}>Chuva Forte</Text>
-              </View>
-            </Marker>
+                >
+                  <View style={styles.mapMarkerContainer}>
+                    <Image
+                      style={styles.mapMarkerImage}
+                      source={{
+                        uri: 'https://www.consumoempauta.com.br/site2020/wp-content/uploads/2018/03/enchente.png'
+                      }}
+                    />
+                    <Text style={styles.mapMarkerTitle}>title</Text>
+                  </View>
+                </Marker>  */}
           </MapView>
         </View>
       </View>

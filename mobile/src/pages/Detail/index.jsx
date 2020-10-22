@@ -7,13 +7,12 @@ import {
   Image,
   Linking
 } from 'react-native';
-
+import { Feather, FontAwesome } from '@expo/vector-icons';
 import { RectButton } from 'react-native-gesture-handler';
-import { useNavigation, useRoute } from '@react-navigation/native';
-
 import { LinearGradient } from 'expo-linear-gradient';
 
-import { Feather, FontAwesome } from '@expo/vector-icons';
+import { useNavigation, useRoute } from '@react-navigation/native';
+
 import styles from './styles';
 
 const Detail = () => {

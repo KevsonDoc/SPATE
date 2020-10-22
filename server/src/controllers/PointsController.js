@@ -64,7 +64,7 @@ class PointsController {
       const points = await knex('tb_points').select('*');
       
       return response.json({
-        points
+        point: points
       });
     } catch (err) {
       console.log(err);
